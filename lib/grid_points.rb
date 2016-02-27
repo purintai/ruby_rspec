@@ -9,25 +9,27 @@ class GridPoints
   end
 
   def connected?
-    if @points.size == 2
-      @points[0].is_neighbor?(@points[1])
-    elsif @points.size == 3
-      if @points[0].is_neighbor?(@points[1])
-       @points[1].is_neighbor?(@points[2]) or @points[0].is_neighbor?(@points[2])
-     else
-       @points[0].is_neighbor?(@points[2]) and @points[1].is_neighbor?(@points[2])
-      end
-    elsif @points.size == 4
-      # TODO
-      result = [0] * @points.size
-      result[0] = 2
-      @points.each_with_index do |point, i|
-        if @points[0].is_neighbor?(point)
-          result[i] += 1
-        end
+    result = [0] * @points.size
+    @points.each do |point|
+      @points.each_with_index do |another, i|
+        result[i] += 1 if point.is_neighbor?(another)
       end
     end
+    !result.include?(0)
   end
+
+  def traversable?
+    result = [0] * @points.size
+    @points.each_with_index do |point, i|
+      result[i] = @points.map{|another| point.is_neighbor?(another)}.count(true)
+    end
+
+    return false if result.include?(0)
+    return false if result.count(1) > 2
+    true
+  end
+
+
 
   def count
     @points.size
