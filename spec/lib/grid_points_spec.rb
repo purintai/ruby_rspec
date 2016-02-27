@@ -14,6 +14,12 @@ describe 'GridPoints' do
       @gp_3_2 = GridPoint.new(3, 2)
       @gp_4_1 = GridPoint.new(4, 1)
       @gp_5_1 = GridPoint.new(5, 1)
+
+
+      @gp_4_4 = GridPoint.new(4, 4)
+      @gp_4_5 = GridPoint.new(4, 5)
+      @gp_5_4 = GridPoint.new(5, 4)
+      @gp_5_5 = GridPoint.new(5, 5)
       @gps = GridPoints.new(@gp_1_1, @gp_2_2, @gp_1_2)
     end
 
@@ -92,6 +98,11 @@ describe 'GridPoints' do
         it '格子点集合が、連結している場合[(3,1),(1,1),(2,1),(4,1)]はtrueを返す' do
           expect((GridPoints.new(@gp_3_1, @gp_1_1, @gp_2_1, @gp_4_1)).connected?).to be true
         end
+
+        it '格子点集合が、連結している場合[(3,1),(1,1),(2,1),(4,1)]はtrueを返す' do
+          expect((GridPoints.new(@gp_1_1, @gp_1_2, @gp_2_1, @gp_2_2,
+                                 @gp_4_4, @gp_4_5, @gp_5_4, @gp_5_5)).connected?).to be false
+        end
       end
     end
 
@@ -131,6 +142,11 @@ describe 'GridPoints' do
 
         it '格子点集合が、一筆書きできない場合はfalseを返す' do # ┬
           expect((GridPoints.new(@gp_1_1, @gp_2_1, @gp_3_1, @gp_2_0)).traversable?).to be false
+        end
+
+        it '格子点集合が、一筆書きできない場合はfalseを返す' do
+          expect((GridPoints.new(@gp_1_1, @gp_1_2, @gp_2_1, @gp_2_2,
+                                 @gp_4_4, @gp_4_5, @gp_5_4, @gp_5_5)).traversable?).to be false
         end
       end
     end

@@ -29,8 +29,6 @@ class GridPoints
     true
   end
 
-
-
   def count
     @points.size
   end
